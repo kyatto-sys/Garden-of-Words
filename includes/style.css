@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Playfair+Display:wght@400;600&family=Quicksand:wght@300;500;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Quicksand', sans-serif;
+        background: linear-gradient(135deg, #e8f5e3 0%, #c8e6c9 50%, #a5d6a7 100%);
+        min-height: 100vh;
+        position: relative;
+    }
+
+    /* Floating Leaves Background */
+    .leaf {
+        position: fixed;
+        font-size: 2em;
+        opacity: 0.3;
+        animation: float 15s infinite ease-in-out;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .leaf:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .leaf:nth-child(2) { left: 30%; animation-delay: 3s; }
+    .leaf:nth-child(3) { left: 50%; animation-delay: 6s; }
+    .leaf:nth-child(4) { left: 70%; animation-delay: 9s; }
+    .leaf:nth-child(5) { left: 90%; animation-delay: 12s; }
+
+    @keyframes float {
+        0% { 
+            transform: translateY(100vh) rotate(0deg); 
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.3;
+        }
+        90% {
+            opacity: 0.3;
+        }
+        100% { 
+            transform: translateY(-100px) rotate(360deg); 
+            opacity: 0;
+        }
+    }
+
+    /* Navigation Bar */
+    .navbar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 20px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 20px rgba(46, 125, 50, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .navbar .logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8em;
+        color: #2e7d32;
+        font-weight: 600;
+    }
+
+    .navbar .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .navbar a {
+        color: #388e3c;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        padding: 8px 16px;
+        border-radius: 10px;
+    }
+
+    .navbar a:hover {
+        background: #e8f5e3;
+        color: #2e7d32;
+    }
+
+    .logout-btn {
+        background: linear-gradient(135deg, #66bb6a, #43a047);
+        color: white !important;
+        padding: 10px 24px !important;
+        border-radius: 12px;
+        font-weight: 700;
+    }
+
+    .logout-btn:hover {
+        background: linear-gradient(135deg, #43a047, #2e7d32) !important;
+        transform: translateY(-2px);
+    }
+
+    /* Main Container */
+    .container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 0 30px;
+        position: relative;
+        z-index: 10;
+    }
+
+    /* Welcome Section */
+    .welcome-card {
+        background: rgba(255, 255, 255, 0.98);
+        padding: 50px;
+        border-radius: 30px;
+        box-shadow: 0 25px 70px rgba(46, 125, 50, 0.2);
+        border: 3px solid #81c784;
+        margin-bottom: 40px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .welcome-card h1 {
+        font-family: 'Playfair Display', serif;
+        color: #2e7d32;
+        font-size: 3em;
+        margin-bottom: 15px;
+    }
+
+    .welcome-card p {
+        color: #66bb6a;
+        font-size: 1.3em;
+        margin-bottom: 10px;
+    }
+
+    .user-info {
+        display: inline-block;
+        background: #e8f5e3;
+        padding: 15px 30px;
+        border-radius: 15px;
+        margin-top: 20px;
+    }
+
+    .user-info strong {
+        color: #2e7d32;
+    }
+
+    /* Action Cards Grid */
+    .action-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .action-card {
+        background: rgba(255, 255, 255, 0.98);
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0 15px 40px rgba(46, 125, 50, 0.15);
+        border: 2px solid #a5d6a7;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .action-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(46, 125, 50, 0.25);
+        border-color: #66bb6a;
+    }
+
+    .action-card .icon {
+        font-size: 4em;
+        margin-bottom: 20px;
+    }
+
+    .action-card h3 {
+        color: #2e7d32;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+
+    .action-card p {
+        color: #66bb6a;
+        font-size: 1.1em;
+        line-height: 1.6;
+    }
+
+    .action-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 14px 30px;
+        background: linear-gradient(135deg, #66bb6a, #43a047);
+        color: white;
+        text-decoration: none;
+        border-radius: 15px;
+        font-weight: 700;
+        transition: all 0.3s;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(67, 160, 71, 0.4);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 15px 20px;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .navbar .nav-links {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .container {
+            padding: 0 20px;
+        }
+
+        .welcome-card {
+            padding: 35px 25px;
+        }
+
+        .welcome-card h1 {
+            font-size: 2.2em;
+        }
+
+        .action-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+

@@ -1,0 +1,176 @@
+/* 🌱 Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 🌧️ Body */
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #e8f5e3 0%, #c8e6c9 50%, #a5d6a7 100%);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 🌿 Navbar */
+.navbar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 20px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 20px rgba(46, 125, 50, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .navbar .logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8em;
+        color: #2e7d32;
+        font-weight: 600;
+    }
+
+    .navbar .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .navbar a {
+        color: #388e3c;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        padding: 8px 16px;
+        border-radius: 10px;
+    }
+
+    .navbar a:hover {
+        background: #e8f5e3;
+        color: #2e7d32;
+    }
+
+    .logout-btn {
+        background: linear-gradient(135deg, #66bb6a, #43a047);
+        color: white !important;
+        padding: 10px 24px !important;
+        border-radius: 12px;
+        font-weight: 700;
+    }
+
+    .logout-btn:hover {
+        background: linear-gradient(135deg, #43a047, #2e7d32) !important;
+        transform: translateY(-2px);
+    }
+
+
+/* 📖 Writing Container */
+.writing-container {
+    max-width: 680px;
+    margin: 4rem auto;
+    padding: 2.5rem;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 18px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+}
+
+/* 🕊️ Headings */
+.writing-container h1 {
+    font-size: 1.8rem;
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: #6c7f73;
+    margin-bottom: 2rem;
+}
+
+/* ✍️ Inputs */
+.soft-input {
+    width: 100%;
+    padding: 0.8rem 0;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid #cfd8cf;
+    background: transparent;
+    margin-bottom: 1.8rem;
+    outline: none;
+}
+
+.soft-input::placeholder {
+    color: #9aa9a0;
+}
+
+/* 📝 Textarea */
+textarea {
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.7;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #cfd8cf;
+    background-color: #f9fbf9;
+    resize: vertical;
+    outline: none;
+}
+
+textarea::placeholder {
+    color: #9aa9a0;
+}
+
+/* 🌱 Options */
+.options {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 2rem;
+    font-size: 0.9rem;
+    color: #4a5d50;
+}
+
+.options label {
+    cursor: pointer;
+}
+
+/* 🌾 Actions */
+.actions {
+    margin-top: 2.5rem;
+    text-align: right;
+}
+
+.save-btn {
+    background-color: #5f7c6a;
+    color: #ffffff;
+    border: none;
+    padding: 0.7rem 1.6rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-btn:hover {
+    background-color: #4e6858;
+}
+
+/* 🍃 Mobile */
+@media (max-width: 768px) {
+    .writing-container {
+        margin: 2rem 1rem;
+        padding: 2rem;
+    }
+
+    .options {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .actions {
+        text-align: center;
+    }
+}
