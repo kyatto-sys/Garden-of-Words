@@ -323,7 +323,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="auth-container">
         <div class="auth-box">
             <h1>🌿 Garden of Words</h1>
-            <p class="subtitle">Share your heart through our postcards</p>
+            <p class="subtitle">Share your heart through our community!</p>
             
             <?php if ($error): ?>
                 <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>

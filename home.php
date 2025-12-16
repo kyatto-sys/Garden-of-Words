@@ -52,7 +52,7 @@ $user_data = mysqli_fetch_assoc($user_result);
         <!-- Welcome Card -->
         <div class="welcome-card">
             <h1>Welcome back, <?php echo htmlspecialchars($username); ?>! 🍵</h1>
-            <p>Your personal matcha postcard garden awaits</p>
+            <p>Your personal garden awaits</p>
             <div class="user-info">
                 <strong>Email:</strong> <?php echo htmlspecialchars($user_data['email']); ?>
                 <br>

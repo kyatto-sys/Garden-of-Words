@@ -339,6 +339,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 margin-bottom: 18px;
             }
         }
+
+                .terms-group {
+            margin-top: 10px;
+        }
+
+        .terms-label {
+            font-size: 0.9em;
+            color: #4e6e5d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.4;
+        }
+
+        .terms-label input {
+            accent-color: #66bb6a;
+        }
+
+        .terms-label a {
+            color: #2e7d32;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .terms-label a:hover {
+            color: #1b5e20;
+        }
+
     </style>
 </head>
 <body>
@@ -399,6 +427,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                            placeholder="Confirm your password"
                            required>
                 </div>
+
+                <div class="input-group terms-group">
+                    <label class="terms-label">
+                        <input type="checkbox" name="agree" required> I agree to the 
+                        <a href="terms.php" target="_blank">Garden Rules</a> and
+                        <a href="privacy.php" target="_blank">Privacy Promise</a>
+                    </label>
+                </div>
+
                 
                 <button type="submit" class="btn">Register 🌱</button>
             </form>
