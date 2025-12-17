@@ -35,17 +35,14 @@ $manuscripts_result = mysqli_query($conn, $manuscripts_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garden of Words - Manuscript Library 🌿</title>
-    <link rel="stylesheet" href="includes/home.css">
+    <link rel="stylesheet" href="includes\home.css">
 </head>
 <body>
-    <!-- Floating Leaves Background -->
-    <div class="leaf">🍃</div>
     <div class="leaf">🍃</div>
     <div class="leaf">🍃</div>
     <div class="leaf">🍃</div>
     <div class="leaf">🍃</div>
 
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">🌿 Garden of Words</div>
         <div class="nav-links">
@@ -57,25 +54,37 @@ $manuscripts_result = mysqli_query($conn, $manuscripts_query);
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="container">
         <div class="header-section">
             <h1>The Literary Garden</h1>
             <p>Discover manuscripts from our creative community</p>
-        </div>
+        <div>
 
-        <!-- Floating Manuscripts Grid -->
+    </div>
         <div class="manuscripts-grid">
             <?php if (mysqli_num_rows($manuscripts_result) > 0): ?>
                 <?php while ($manuscript = mysqli_fetch_assoc($manuscripts_result)): ?>
                     <div class="manuscript-card" data-id="<?php echo $manuscript['id']; ?>">
                         <div class="manuscript-header">
-                            <div class="pdf-icon">📄</div>
+                            <div class="cover-wrapper"></div>
+                                <div class="cover-wrapper">
+                                        <?php if (!empty($manuscript['cover_image'])): ?>
+                                            <img 
+                                                src="<?php echo htmlspecialchars($manuscript['cover_image']); ?>" 
+                                                alt="Manuscript cover"
+                                                class="cover-image"
+                                            >
+                                        <?php else: ?>
+                                            <div class="pdf-icon"></div>
+                                        <?php endif; ?>
+                                    </div>
                             <div class="manuscript-meta">
                                 <h3 class="manuscript-title"><?php echo htmlspecialchars($manuscript['title']); ?></h3>
                                 <p class="manuscript-author">by <?php echo htmlspecialchars($manuscript['author_username']); ?></p>
+                                
                             </div>
                         </div>
+                        
 
                         <div class="manuscript-description">
                             <?php 
@@ -96,6 +105,8 @@ $manuscripts_result = mysqli_query($conn, $manuscripts_query);
                             </span>
                         </div>
 
+                        
+
                         <div class="manuscript-actions">
                             <button class="reaction-btn like-btn <?php echo ($manuscript['user_reaction'] == 'like') ? 'active' : ''; ?>" 
                                     data-manuscript-id="<?php echo $manuscript['id']; ?>" 
@@ -110,8 +121,8 @@ $manuscripts_result = mysqli_query($conn, $manuscripts_query);
                                 <span class="icon">👎</span>
                                 <span class="count"><?php echo $manuscript['dislike_count']; ?></span>
                             </button>
-
-                            <a href="read.php?id=<?php echo $row['id']; ?>" class="btn-read"> Read Now 📖</a>
+                        
+                            <a href="read.php?id=<?php echo $manuscript['id']; ?>" class="btn-read"> Read Now 📖</a>
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -130,3 +141,4 @@ $manuscripts_result = mysqli_query($conn, $manuscripts_query);
     <script src="includes/script.js"></script>
 </body>
 </html>
+

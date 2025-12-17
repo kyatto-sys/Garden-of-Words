@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = mysqli_real_escape_string($conn, trim($_POST['title']));
     $description = mysqli_real_escape_string($conn, trim($_POST['description']));
     $is_public = isset($_POST['is_public']) ? 1 : 0;
-    
+
     // Validation
     if (empty($title)) {
         $error = "Please enter a title for your manuscript!";
@@ -29,43 +29,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Please upload a PDF file!";
     } else {
         $file = $_FILES['manuscript_file'];
-        
-        // Validate file type
+
+        // Validate file type and size
         $allowed_types = ['application/pdf'];
         $file_type = $file['type'];
         $file_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        
+
         if (!in_array($file_type, $allowed_types) || $file_ext !== 'pdf') {
             $error = "Only PDF files are allowed!";
-        } elseif ($file['size'] > 10 * 1024 * 1024) { // 10MB max
+        } elseif ($file['size'] > 10 * 1024 * 1024) {
             $error = "File size must be less than 10MB!";
         } else {
-            // Create upload directory if it doesn't exist
+            // Create upload directory if not exists
             $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/garden-of-words/uploads/manuscripts/';
-            if (!file_exists($upload_dir)) {
-                mkdir($upload_dir, 0777, true);
-            }
-            
+            if (!file_exists($upload_dir)) mkdir($upload_dir, 0777, true);
+
             // Generate unique filename
-            $original_name = pathinfo($file['name'], PATHINFO_FILENAME);
             $unique_name = $user_id . '_' . time() . '_' . uniqid() . '.pdf';
             $file_path = $upload_dir . $unique_name;
-            
-            // Move uploaded file
+
+            // Move uploaded PDF
             if (move_uploaded_file($file['tmp_name'], $file_path)) {
-                // Save to database
                 $db_filepath = '/garden-of-words/uploads/manuscripts/' . $unique_name;
-                $insert_query = "INSERT INTO manuscripts (user_id, title, description, filename, filepath, is_public, created_at) 
-                                VALUES ($user_id, '$title', '$description', '" . mysqli_real_escape_string($conn, $file['name']) . "', '$db_filepath', $is_public, NOW())";
-                
+
+                // Handle optional cover image
+                $cover_path = null;
+                if (!empty($_FILES['cover_image']['name'])) {
+                    $cover_ext = strtolower(pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION));
+                    $allowed_cover_ext = ['jpg', 'jpeg', 'png'];
+
+                    if (in_array($cover_ext, $allowed_cover_ext)) {
+                        $cover_dir = $_SERVER['DOCUMENT_ROOT'] . '/garden-of-words/uploads/covers/';
+                        if (!file_exists($cover_dir)) mkdir($cover_dir, 0777, true);
+
+                        $cover_name = $user_id . '_' . time() . '_' . uniqid() . '.' . $cover_ext;
+                        $cover_path = '/garden-of-words/uploads/covers/' . $cover_name;
+
+                        move_uploaded_file($_FILES['cover_image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $cover_path);
+                    }
+                }
+
+                // Insert into database
+                $insert_query = "INSERT INTO manuscripts (user_id, title, description, filename, filepath, cover_image, is_public, created_at) 
+                                 VALUES ($user_id, '$title', '$description', '" . mysqli_real_escape_string($conn, $file['name']) . "', '$db_filepath', " . ($cover_path ? "'$cover_path'" : "NULL") . ", $is_public, NOW())";
+
                 if (mysqli_query($conn, $insert_query)) {
-                    $success = "Manuscript uploaded successfully! 🎉";
-                    // Clear form
-                    $_POST = array();
+                    $success = "Manuscript uploaded successfully!";
+                    $_POST = array(); // Clear form
                 } else {
                     $error = "Failed to save manuscript to database: " . mysqli_error($conn);
-                    // Delete uploaded file if database insert fails
-                    unlink($file_path);
+                    unlink($file_path); // Remove uploaded PDF if DB fails
                 }
             } else {
                 $error = "Failed to upload file. Please try again!";
@@ -85,11 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <!-- Floating Leaves -->
-    <div class="leaf">🍃</div>
-    <div class="leaf">🍃</div>
-    <div class="leaf">🍃</div>
-    <div class="leaf">🍃</div>
-    <div class="leaf">🍃</div>
+    <div class="leaf">🍃</div><div class="leaf">🍃</div><div class="leaf">🍃</div><div class="leaf">🍃</div><div class="leaf">🍃</div>
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -114,8 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <?php if ($success): ?>
                 <div class="alert alert-success">
-                    <?php echo htmlspecialchars($success); ?>
-                    <br><br>
+                    <?php echo htmlspecialchars($success); ?><br><br>
                     <a href="home.php" style="color: #1b5e20; text-decoration: underline;">View it on the home page</a>
                 </div>
             <?php endif; ?>
@@ -124,99 +132,75 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- Title -->
                 <div class="form-group">
                     <label for="title">Manuscript Title *</label>
-                    <input type="text" 
-                           id="title" 
-                           name="title" 
-                           placeholder="Enter your manuscript title"
-                           value="<?php echo isset($_POST['title']) ? htmlspecialchars($_POST['title']) : ''; ?>"
-                           required>
+                    <input type="text" id="title" name="title" placeholder="Enter your manuscript title"
+                           value="<?php echo isset($_POST['title']) ? htmlspecialchars($_POST['title']) : ''; ?>" required>
                 </div>
 
                 <!-- Description -->
                 <div class="form-group">
                     <label for="description">Short Description *</label>
-                    <textarea id="description" 
-                              name="description" 
-                              placeholder="Write a brief description of your manuscript (what it's about, genre, etc.)"
-                              required><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
+                    <textarea id="description" name="description" placeholder="Write a brief description of your manuscript (genre, story, etc.)" required><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
                 </div>
 
-                <!-- File Upload -->
+                <!-- PDF Upload -->
                 <div class="form-group">
                     <label>Upload PDF File *</label>
                     <div class="file-upload-wrapper" id="fileUploadWrapper">
                         <div class="file-upload-icon">📄</div>
                         <p>Click or drag & drop your PDF file here</p>
                         <small>Maximum file size: 10MB</small>
-                        <input type="file" 
-                               id="manuscript_file" 
-                               name="manuscript_file" 
-                               accept=".pdf,application/pdf"
-                               required>
+                        <input type="file" id="manuscript_file" name="manuscript_file" accept=".pdf,application/pdf" required>
                         <div class="file-name" id="fileName"></div>
                     </div>
                 </div>
 
-                <!-- Public/Private Toggle -->
+                <!-- Cover Upload -->
+                <div class="form-group">
+                    <label>Cover Image (optional)</label>
+                    <div class="file-upload-wrapper">
+                        <div class="file-upload-icon">🖼️</div>
+                        <p>Upload a cover image for your manuscript</p>
+                        <small>JPEG or PNG · Recommended ratio 2:3</small>
+                        <input type="file" name="cover_image" accept="image/jpeg,image/png">
+                    </div>
+                </div>
+
+                <!-- Public/Private -->
                 <div class="checkbox-group">
-                    <input type="checkbox" 
-                           id="is_public" 
-                           name="is_public" 
-                           checked>
-                    <label for="is_public">
-                        🌍 Make this manuscript public (others can view and read it)
-                    </label>
+                    <input type="checkbox" id="is_public" name="is_public" checked>
+                    <label for="is_public">Make this manuscript public (others can view and read it)</label>
                 </div>
 
                 <!-- Buttons -->
                 <div class="btn-group">
                     <a href="home.php" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Upload Manuscript 📤</button>
+                    <button type="submit" class="btn btn-primary">Upload Manuscript</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // File upload preview
-        const fileInput = document.getElementById('manuscript_file');
-        const fileWrapper = document.getElementById('fileUploadWrapper');
-        const fileName = document.getElementById('fileName');
+    // PDF upload preview
+    const fileInput = document.getElementById('manuscript_file');
+    const fileWrapper = document.getElementById('fileUploadWrapper');
+    const fileName = document.getElementById('fileName');
 
-        fileInput.addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                const file = this.files[0];
-                fileName.textContent = '📄 ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
-                fileWrapper.classList.add('has-file');
-            } else {
-                fileName.textContent = '';
-                fileWrapper.classList.remove('has-file');
-            }
-        });
+    fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            const file = this.files[0];
+            fileName.textContent = '📄 ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+            fileWrapper.classList.add('has-file');
+        } else {
+            fileName.textContent = '';
+            fileWrapper.classList.remove('has-file');
+        }
+    });
 
-        // Drag and drop
-        fileWrapper.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#66bb6a';
-            this.style.background = '#e8f5e3';
-        });
-
-        fileWrapper.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            if (!fileInput.files.length) {
-                this.style.borderColor = '#a5d6a7';
-                this.style.background = '#f8fdf8';
-            }
-        });
-
-        fileWrapper.addEventListener('drop', function(e) {
-            e.preventDefault();
-            const files = e.dataTransfer.files;
-            if (files.length) {
-                fileInput.files = files;
-                fileInput.dispatchEvent(new Event('change'));
-            }
-        });
+    // Drag & drop
+    fileWrapper.addEventListener('dragover', e => { e.preventDefault(); fileWrapper.style.borderColor='#66bb6a'; fileWrapper.style.background='#e8f5e3'; });
+    fileWrapper.addEventListener('dragleave', e => { e.preventDefault(); if (!fileInput.files.length) { fileWrapper.style.borderColor='#a5d6a7'; fileWrapper.style.background='#f8fdf8'; } });
+    fileWrapper.addEventListener('drop', e => { e.preventDefault(); if (e.dataTransfer.files.length) { fileInput.files = e.dataTransfer.files; fileInput.dispatchEvent(new Event('change')); } });
     </script>
 </body>
 </html>
