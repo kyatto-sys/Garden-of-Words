@@ -49,6 +49,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 // Generate verification token
                 $verification_token = bin2hex(random_bytes(32));
+
+                $password = $_POST['password'];
+
+                $errors = [];
+
+                if (strlen($password) < 8) {
+                    $errors[] = "Password must be at least 8 characters long.";
+                }
+
+                if (!preg_match('/[A-Z]/', $password)) {
+                    $errors[] = "Password must contain at least one uppercase letter.";
+                }
+
+                if (!preg_match('/[a-z]/', $password)) {
+                    $errors[] = "Password must contain at least one lowercase letter.";
+                }
+
+                if (!preg_match('/[0-9]/', $password)) {
+                    $errors[] = "Password must contain at least one number.";
+                }
+
+                if (!preg_match('/[\W_]/', $password)) {
+                    $errors[] = "Password must contain at least one special character.";
+                }
+
+                if (!empty($errors)) {
+                    foreach ($errors as $error) {
+                        echo "<p style='color:red;'>$error</p>";
+                    }
+                    exit;
+                }
                 
                 // Hash password and insert user
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -340,21 +371,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-                .terms-group {
-            margin-top: 10px;
-        }
+            .terms-group {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: flex-start !important;
+                justify-content: flex-start !important;
+                gap: 10px;
+                text-align: left !important;
+                margin-top: 16px;
+            }
+
+            .input-group.terms-group input[type="checkbox"] {
+                margin: 4px 0 0 0 !important;
+                width: 16px;
+                height: 16px;
+                accent-color: #66bb6a;
+                flex-shrink: 0;
+            }
 
         .terms-label {
-            font-size: 0.9em;
-            color: #4e6e5d;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            fdisplay: block !important;
             line-height: 1.4;
+            font-size: 14px;
+            color: #2e7d32;
+            cursor: pointer;
         }
 
         .terms-label input {
             accent-color: #66bb6a;
+            margin-top: 3px;
         }
 
         .terms-label a {
@@ -378,7 +423,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="auth-container">
         <div class="auth-box">
-            <h1>🌿 Garden of Words</h1>
+            <h1>Garden of Words</h1>
             <p class="subtitle">Join our garden and share your stories</p>
             
             <?php if ($error): ?>
@@ -415,7 +460,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="password" 
                            id="password" 
                            name="password" 
-                           placeholder="Create a password (min. 6 characters)"
+                           minlength="8"
+                           pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}"
+                           placeholder="At least 8 chars, uppercase, lowercase, number, special character"
                            required>
                 </div>
 
@@ -429,8 +476,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="input-group terms-group">
-                    <label class="terms-label">
-                        <input type="checkbox" name="agree" required> I agree to the 
+                    <input type="checkbox" name="agree" required>
+                        <label class="terms-label">
+                        I agree to the 
                         <a href="terms.php" target="_blank">Garden Rules</a> and
                         <a href="privacy.php" target="_blank">Privacy Promise</a>
                     </label>

@@ -60,7 +60,7 @@ function sendVerificationEmail($to_email, $username, $verification_token) {
                                 <td style='padding: 40px 30px;'>
                                     <h2 style='color: #2e7d32; margin: 0 0 20px 0; font-size: 24px;'>Welcome, " . htmlspecialchars($username) . "!</h2>
                                     <p style='color: #555555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;'>
-                                        Thank you for joining our matcha postcard community. We're excited to have you here!
+                                        Thank you for joining our community. We're excited to have you here!
                                     </p>
                                     <p style='color: #555555; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;'>
                                         To get started, please verify your email address by clicking the button below:
