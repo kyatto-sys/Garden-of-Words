@@ -81,3 +81,82 @@ document.querySelectorAll('.reaction-btn').forEach(btn => {
                 }
             });
         });
+
+
+    // Handle like/dislike reactions
+document.addEventListener('DOMContentLoaded', function() {
+const reactionButtons = document.querySelectorAll('.reaction-btn');
+
+reactionButtons.forEach(btn => {
+    btn.addEventListener('click', async function(e) {
+        e.preventDefault();
+        
+        const manuscriptId = this.dataset.manuscriptId;
+        const action = this.dataset.action;
+        
+        // Disable button temporarily to prevent double clicks
+        this.disabled = true;
+        
+        try {
+            const response = await fetch('/garden-of-words/api/react.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    manuscript_id: manuscriptId,
+                    action: action
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Update counts
+                const card = this.closest('.manuscript-card');
+                const likeBtn = card.querySelector('.like-btn');
+                const dislikeBtn = card.querySelector('.dislike-btn');
+                
+                likeBtn.querySelector('.count').textContent = data.like_count;
+                dislikeBtn.querySelector('.count').textContent = data.dislike_count;
+                
+                // Update active states
+                likeBtn.classList.remove('active');
+                dislikeBtn.classList.remove('active');
+                
+                if (data.user_reaction === 'like') {
+                    likeBtn.classList.add('active');
+                } else if (data.user_reaction === 'dislike') {
+                    dislikeBtn.classList.add('active');
+                }
+                
+                // Add a little animation feedback
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            } else {
+                console.error('Error:', data.error);
+                alert('Failed to update reaction. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        } finally {
+            // Re-enable button
+            this.disabled = false;
+        }
+    });
+});
+});
+
+// Optional: Add hover tooltips
+document.addEventListener('DOMContentLoaded', function() {
+const reactionButtons = document.querySelectorAll('.reaction-btn');
+
+reactionButtons.forEach(btn => {
+    const action = btn.dataset.action;
+    const tooltip = action === 'like' ? 'Like this manuscript' : 'Dislike this manuscript';
+    btn.setAttribute('title', tooltip);
+});
+});

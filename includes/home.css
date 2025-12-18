@@ -146,6 +146,64 @@ body {
     padding: 20px 0;
 }
 
+.manuscript-card:hover {
+    transform: translateY(-15px) scale(1.02) !important;
+    box-shadow: 0 20px 60px rgba(46, 125, 50, 0.3);
+    border-color: #81c784;
+    animation: none;
+}
+
+/* Cover Image Section */
+.cover-wrapper {
+    width: 100% !important;
+    height: 280px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #e8f5e3, #c8e6c9);
+    border-radius: 20px 20px 0 0;
+    margin: 0;
+    padding: 0;
+}
+
+.cover-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center;
+    transition: transform 0.3s ease;
+    display: block !important;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.manuscript-card:hover .cover-image {
+    transform: scale(1.05);
+}
+
+/* Default Cover (when no image) */
+.default-cover {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e8f5e3, #c8e6c9);
+}
+
+.default-cover .pdf-icon {
+    font-size: 5em;
+    margin-bottom: 10px;
+    opacity: 0.6;
+}
+
+.no-cover-text {
+    color: #66bb6a;
+    font-weight: 600;
+    font-size: 1.1em;
+    opacity: 0.7;
+}
 /* Manuscript Card - Floating Effect */
 .manuscript-card {
     background: rgba(255, 255, 255, 0.98);

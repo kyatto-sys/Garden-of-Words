@@ -35,9 +35,10 @@ $manuscripts_result = mysqli_query($conn, $manuscripts_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garden of Words - Manuscript Library 🌿</title>
-    <link rel="stylesheet" href="includes\home.css">
+    <link rel="stylesheet" href="includes/home.css">
 </head>
 <body>
+    <div class="leaf">🍃</div>
     <div class="leaf">🍃</div>
     <div class="leaf">🍃</div>
     <div class="leaf">🍃</div>
@@ -58,78 +59,77 @@ $manuscripts_result = mysqli_query($conn, $manuscripts_query);
         <div class="header-section">
             <h1>The Literary Garden</h1>
             <p>Discover manuscripts from our creative community</p>
-        <div>
+        </div>
 
-    </div>
         <div class="manuscripts-grid">
             <?php if (mysqli_num_rows($manuscripts_result) > 0): ?>
                 <?php while ($manuscript = mysqli_fetch_assoc($manuscripts_result)): ?>
                     <div class="manuscript-card" data-id="<?php echo $manuscript['id']; ?>">
-                        <div class="manuscript-header">
-                            <div class="cover-wrapper"></div>
-                                <div class="cover-wrapper">
-                                        <?php if (!empty($manuscript['cover_image'])): ?>
-                                            <img 
-                                                src="<?php echo htmlspecialchars($manuscript['cover_image']); ?>" 
-                                                alt="Manuscript cover"
-                                                class="cover-image"
-                                            >
-                                        <?php else: ?>
-                                            <div class="pdf-icon"></div>
-                                        <?php endif; ?>
-                                    </div>
-                            <div class="manuscript-meta">
+                        <!-- Cover Image Section -->
+                        <div class="cover-wrapper">
+                            <?php if (!empty($manuscript['cover_image'])): ?>
+                                <img 
+                                    src="<?php echo htmlspecialchars($manuscript['cover_image']); ?>" 
+                                    alt="<?php echo htmlspecialchars($manuscript['title']); ?> cover"
+                                    class="cover-image"
+                                >
+                            <?php else: ?>
+                                <div class="default-cover">
+                                    <div class="pdf-icon">📄</div>
+                                    <div class="no-cover-text">No Cover</div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Manuscript Info -->
+                        <div class="manuscript-content">
+                            <div class="manuscript-header">
                                 <h3 class="manuscript-title"><?php echo htmlspecialchars($manuscript['title']); ?></h3>
                                 <p class="manuscript-author">by <?php echo htmlspecialchars($manuscript['author_username']); ?></p>
-                                
                             </div>
-                        </div>
-                        
 
-                        <div class="manuscript-description">
-                            <?php 
-                            $desc = htmlspecialchars($manuscript['description']);
-                            echo strlen($desc) > 120 ? substr($desc, 0, 120) . '...' : $desc;
-                            ?>
-                        </div>
+                            <div class="manuscript-description">
+                                <?php 
+                                $desc = htmlspecialchars($manuscript['description']);
+                                echo strlen($desc) > 120 ? substr($desc, 0, 120) . '...' : $desc;
+                                ?>
+                            </div>
 
-                        <div class="manuscript-stats">
-                            <span class="stat">
-                                <span class="icon">👁️</span> <?php echo $manuscript['views']; ?>
-                            </span>
-                            <span class="stat">
-                                <span class="icon">💬</span> <?php echo $manuscript['comment_count']; ?>
-                            </span>
-                            <span class="stat">
-                                <span class="icon">📅</span> <?php echo date('M j', strtotime($manuscript['created_at'])); ?>
-                            </span>
-                        </div>
+                            <div class="manuscript-stats">
+                                <span class="stat">
+                                    <span class="icon">👁️</span> <?php echo $manuscript['views']; ?>
+                                </span>
+                                <span class="stat">
+                                    <span class="icon">💬</span> <?php echo $manuscript['comment_count']; ?>
+                                </span>
+                                <span class="stat">
+                                    <span class="icon">📅</span> <?php echo date('M j', strtotime($manuscript['created_at'])); ?>
+                                </span>
+                            </div>
 
-                        
-
-                        <div class="manuscript-actions">
-                            <button class="reaction-btn like-btn <?php echo ($manuscript['user_reaction'] == 'like') ? 'active' : ''; ?>" 
-                                    data-manuscript-id="<?php echo $manuscript['id']; ?>" 
-                                    data-action="like">
-                                <span class="icon">👍</span>
-                                <span class="count"><?php echo $manuscript['like_count']; ?></span>
-                            </button>
+                            <div class="manuscript-actions">
+                                <button class="reaction-btn like-btn <?php echo ($manuscript['user_reaction'] == 'like') ? 'active' : ''; ?>" 
+                                        data-manuscript-id="<?php echo $manuscript['id']; ?>" 
+                                        data-action="like">
+                                    <span class="icon">👍</span>
+                                    <span class="count"><?php echo $manuscript['like_count']; ?></span>
+                                </button>
+                                
+                                <button class="reaction-btn dislike-btn <?php echo ($manuscript['user_reaction'] == 'dislike') ? 'active' : ''; ?>" 
+                                        data-manuscript-id="<?php echo $manuscript['id']; ?>" 
+                                        data-action="dislike">
+                                    <span class="icon">👎</span>
+                                    <span class="count"><?php echo $manuscript['dislike_count']; ?></span>
+                                </button>
                             
-                            <button class="reaction-btn dislike-btn <?php echo ($manuscript['user_reaction'] == 'dislike') ? 'active' : ''; ?>" 
-                                    data-manuscript-id="<?php echo $manuscript['id']; ?>" 
-                                    data-action="dislike">
-                                <span class="icon">👎</span>
-                                <span class="count"><?php echo $manuscript['dislike_count']; ?></span>
-                            </button>
-                        
-                            <a href="read.php?id=<?php echo $manuscript['id']; ?>" class="btn-read"> Read Now 📖</a>
+                                <a href="read.php?id=<?php echo $manuscript['id']; ?>" class="btn-read">Read Now 📖</a>
+                            </div>
                         </div>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
                 <div class="no-manuscripts">
                     <div class="empty-state">
-                        <span class="empty-icon">📚</span>
                         <h2>No manuscripts yet!</h2>
                         <p>Be the first to share your work with the community</p>
                         <a href="upload.php" class="upload-btn-large">Upload Your Manuscript</a>
@@ -141,4 +141,3 @@ $manuscripts_result = mysqli_query($conn, $manuscripts_query);
     <script src="includes/script.js"></script>
 </body>
 </html>
-
