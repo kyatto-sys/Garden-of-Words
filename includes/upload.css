@@ -55,6 +55,23 @@
             font-size: 1.8em;
             color: #2e7d32;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar .logo img {
+            width: 35px !important;
+            height: 35px !important;
+            object-fit: contain;
+            max-width: 35px;
+            max-height: 35px;
+        }
+
+
+        img.logo {
+            height: 24px;
+            width: auto;
         }
 
         .navbar .nav-links {
@@ -179,6 +196,18 @@
         .file-upload-icon {
             font-size: 4em;
             margin-bottom: 15px;
+        }
+
+        img.file-upload-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 15px;
+        }
+
+        .icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
         }
 
         .file-upload-wrapper p {
@@ -321,13 +350,71 @@
 
             .upload-card {
                 padding: 35px 25px;
+                margin: 20px 0;
             }
 
             .upload-card h1 {
                 font-size: 2em;
             }
 
+            .form-group {
+                margin-bottom: 25px;
+            }
+
+            .form-group label {
+                font-size: 1.1em;
+                margin-bottom: 8px;
+            }
+
+            textarea, input[type="text"] {
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 12px 15px;
+            }
+
+            .file-upload-wrapper {
+                padding: 25px;
+            }
+
+            .file-upload-wrapper p {
+                font-size: 1em;
+                margin: 10px 0;
+            }
+
+            .file-upload-wrapper small {
+                font-size: 0.85em;
+            }
+
             .btn-group {
                 flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                min-height: 48px;
+                font-size: 1.1em;
+                padding: 12px 24px;
+            }
+
+            .checkbox-group {
+                padding: 15px;
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .upload-card {
+                padding: 25px 20px;
+            }
+
+            .upload-card h1 {
+                font-size: 1.8em;
+            }
+
+            .file-upload-wrapper {
+                padding: 20px;
             }
         }

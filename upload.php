@@ -102,19 +102,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="logo">🌿 Garden of Words</div>
+        <div class="logo"><img src="assets/garden.png" alt="Garden"> Garden of Words</div>
         <div class="nav-links">
             <a href="home.php">Discover</a>
             <a href="my-manuscripts.php">My Manuscripts</a>
             <a href="profile.php">Profile</a>
             <a href="logout.php" class="logout-btn">Logout</a>
         </div>
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
 
     <!-- Main Content -->
     <div class="container">
         <div class="upload-card">
-            <h1>📝 Upload Your Manuscript</h1>
+            <h1><img src="assets/manuscript.png" alt="Upload" class="icon"> Upload Your Manuscript</h1>
             <p class="subtitle">Share your creative work with the community</p>
 
             <?php if ($error): ?>
@@ -146,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label>Upload PDF File *</label>
                     <div class="file-upload-wrapper" id="fileUploadWrapper">
-                        <div class="file-upload-icon">📄</div>
+                        <img src="assets/pdf.png" alt="PDF" class="file-upload-icon">
                         <p>Click or drag & drop your PDF file here</p>
                         <small>Maximum file size: 10MB</small>
                         <input type="file" id="manuscript_file" name="manuscript_file" accept=".pdf,application/pdf" required>
@@ -158,10 +163,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label>Cover Image (optional)</label>
                     <div class="file-upload-wrapper">
-                        <div class="file-upload-icon">🖼️</div>
+                        <img src="assets/cover.png" alt="Cover" class="file-upload-icon">
                         <p>Upload a cover image for your manuscript</p>
                         <small>JPEG or PNG · Recommended ratio 2:3</small>
-                        <input type="file" name="cover_image" accept="image/jpeg,image/png">
+                        <input type="file" id="cover_image" name="cover_image" accept="image/jpeg,image/png">
+                        <div class="file-name" id="coverFileName"></div>
                     </div>
                 </div>
 
@@ -189,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     fileInput.addEventListener('change', function() {
         if (this.files && this.files[0]) {
             const file = this.files[0];
-            fileName.textContent = '📄 ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+            fileName.textContent = 'File: ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
             fileWrapper.classList.add('has-file');
         } else {
             fileName.textContent = '';
@@ -201,6 +207,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     fileWrapper.addEventListener('dragover', e => { e.preventDefault(); fileWrapper.style.borderColor='#66bb6a'; fileWrapper.style.background='#e8f5e3'; });
     fileWrapper.addEventListener('dragleave', e => { e.preventDefault(); if (!fileInput.files.length) { fileWrapper.style.borderColor='#a5d6a7'; fileWrapper.style.background='#f8fdf8'; } });
     fileWrapper.addEventListener('drop', e => { e.preventDefault(); if (e.dataTransfer.files.length) { fileInput.files = e.dataTransfer.files; fileInput.dispatchEvent(new Event('change')); } });
+
+    // Cover image upload preview
+    const coverInput = document.getElementById('cover_image');
+    const coverFileName = document.getElementById('coverFileName');
+
+    coverInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            const file = this.files[0];
+            coverFileName.textContent = 'File: ' + file.name + ' (' + (file.size / 1024).toFixed(2) + ' KB)';
+        } else {
+            coverFileName.textContent = '';
+        }
+    });
     </script>
 </body>
 </html>

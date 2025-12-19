@@ -45,42 +45,7 @@ async function dislikeBook(bookId) {
     }
 }
 
-document.querySelectorAll('.reaction-btn').forEach(btn => {
-            btn.addEventListener('click', async function() {
-                const manuscriptId = this.dataset.manuscriptId;
-                const action = this.dataset.action;
-                
-                try {
-                    const response = await fetch('api/react.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            manuscript_id: manuscriptId,
-                            action: action
-                        })
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        // Update counts
-                        const card = this.closest('.manuscript-card');
-                        card.querySelector('.like-btn .count').textContent = data.like_count;
-                        card.querySelector('.dislike-btn .count').textContent = data.dislike_count;
-                        
-                        // Update active states
-                        card.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('active'));
-                        if (data.user_reaction) {
-                            card.querySelector(`.${data.user_reaction}-btn`).classList.add('active');
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
+
 
 
     // Handle like/dislike reactions
@@ -98,7 +63,7 @@ reactionButtons.forEach(btn => {
         this.disabled = true;
         
         try {
-            const response = await fetch('/garden-of-words/api/react.php', {
+            const response = await fetch('api/react.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -159,4 +124,33 @@ reactionButtons.forEach(btn => {
     const tooltip = action === 'like' ? 'Like this manuscript' : 'Dislike this manuscript';
     btn.setAttribute('title', tooltip);
 });
+});
+
+// Mobile menu toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+            });
+        });
+    }
 });
