@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🌿 Garden Rules</h1>
+        <h1>Garden Rules</h1>
 
         <p>
             Garden of Words is a quiet place meant for reflection, honesty,
