@@ -78,7 +78,8 @@ $total_likes = mysqli_fetch_assoc($total_likes_result)['total_likes'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Manuscripts - Garden of Words 🌿</title>
-    <link rel="stylesheet" href="includes/my-manuscripts.css">
+    <link rel="stylesheet" href="includes/generalstyles.css">
+    <link rel="stylesheet" href="includes/functional.css">
 </head>
 <body>
     <div class="leaf">🍃</div>

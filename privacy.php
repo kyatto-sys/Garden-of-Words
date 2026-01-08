@@ -2,45 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Privacy Promise 🤍</title>
-    <link rel="stylesheet" href="includes/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Promise - Garden of Words</title>
+    <link rel="stylesheet" href="includes/generalstyles.css">
+    <link rel="stylesheet" href="includes/functional.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🤍 Our Privacy Promise</h1>
+    <!-- Floating Leaves -->
+    <div class="leaf">🍃</div>
+    <div class="leaf">🍃</div>
+    <div class="leaf">🍃</div>
+    <div class="leaf">🍃</div>
+    <div class="leaf">🍃</div>
 
+    <div class="container">
+        <main class="policy">
+    <header class="policy-header">
+        <h1>Privacy Promise</h1>
+        <p class="intro">
+            Your words are personal. This garden was created for softness,
+            not surveillance.
+        </p>
+    </header>
+
+    <section class="policy-section">
         <p>
-            Your words are personal. We understand that.
-            This garden was made for softness, not surveillance.
+            To care for your account, we collect only what is necessary:
         </p>
 
-        <p><strong>What we collect:</strong></p>
-        <ul>
-            <li>Your username and email, so we know how to care for your account</li>
-            <li>Your written works, only as you choose to share them</li>
-        </ul>
+        <div class="rule">
+            <div class="rule-number">01</div>
+            <div class="rule-text">
+                Your username and email, used solely for account access and communication.
+            </div>
+        </div>
 
-        <p><strong>What we do not do:</strong></p>
-        <ul>
-            <li>We do not sell your data</li>
-            <li>We do not read private content unnecessarily</li>
-            <li>We do not track you beyond what is needed for the garden to function</li>
-        </ul>
+        <div class="rule">
+            <div class="rule-number">02</div>
+            <div class="rule-text">
+                The works you choose to share within the garden.
+            </div>
+        </div>
+    </section>
 
+    <div class="policy-divider"></div>
+
+    <section class="policy-section">
         <p>
-            Your password is encrypted and kept hidden, even from us.
+            What we do not do:
+        </p>
+
+        <div class="rule">
+            <div class="rule-number">—</div>
+            <div class="rule-text">
+                We do not sell personal data.
+            </div>
+        </div>
+
+        <div class="rule">
+            <div class="rule-number">—</div>
+            <div class="rule-text">
+                We do not access private content unnecessarily.
+            </div>
+        </div>
+
+        <div class="rule">
+            <div class="rule-number">—</div>
+            <div class="rule-text">
+                We do not track beyond what is required for the garden to function.
+            </div>
+        </div>
+    </section>
+
+    <div class="policy-divider"></div>
+
+    <section class="policy-section">
+        <p>
+            Passwords are encrypted and never visible, even to us.
             What is meant to be private stays private.
         </p>
-
         <p>
-            If one day you choose to leave, your presence here does not follow you.
+            Should you ever choose to leave, your presence does not follow you.
             Gardens remember seasons — not footprints.
         </p>
-
         <p>
-            If you ever have concerns, questions, or unease,
-            you may reach out. We listen.
+            If you have questions or concerns, you may reach out.
+            We listen.
         </p>
+    </section>
+</main>
     </div>
+
+    <script src="includes/script.js"></script>
 </body>
 </html>

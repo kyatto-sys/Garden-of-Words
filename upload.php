@@ -94,7 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Manuscript - Garden of Words 🌿</title>
-    <link rel="stylesheet" href="includes/upload.css">
+    <link rel="stylesheet" href="includes/generalstyles.css">
+    <link rel="stylesheet" href="includes/functional.css">
 </head>
 <body>
     <!-- Floating Leaves -->

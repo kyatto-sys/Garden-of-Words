@@ -72,7 +72,8 @@ $trending_result = mysqli_query($conn, $trending_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garden of Words - Manuscript Library 🌿</title>
-    <link rel="stylesheet" href="includes/home.css">
+    <link rel="stylesheet" href="includes/generalstyles.css">
+    <link rel="stylesheet" href="includes/functional.css">
 </head>
 <body>
     <div class="leaf">🍃</div>

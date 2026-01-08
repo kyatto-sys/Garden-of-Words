@@ -112,7 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Manuscript - Garden of Words 🌿</title>
-    <link rel="stylesheet" href="includes/upload.css">
+    <link rel="stylesheet" href="includes/generalstyles.css">
+    <link rel="stylesheet" href="includes/functional.css">
 </head>
 <body>
     <!-- Floating Leaves -->
@@ -244,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (this.files && this.files[0]) {
                     const file = this.files[0];
                     coverFileName.textContent = 'Cover: ' + file.name;
-                    
+
                     // Uncheck remove cover if uploading new one
                     if (removeCheckbox) {
                         removeCheckbox.checked = false;
@@ -265,104 +266,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             });
         }
     </script>
-
-    <style>
-        /* Additional styles for edit page */
-        .current-cover-wrapper {
-            background: #f8fdf8;
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid #e8f5e3;
-        }
-
-        .current-cover-image {
-            max-width: 300px;
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            display: block;
-            margin: 0 auto 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .cover-actions {
-            text-align: center;
-        }
-
-        .checkbox-inline {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            padding: 10px 20px;
-            background: white;
-            border-radius: 10px;
-            border: 2px solid #ffcdd2;
-            transition: all 0.3s;
-        }
-
-        .checkbox-inline:hover {
-            background: #ffebee;
-            border-color: #ef5350;
-        }
-
-        .checkbox-inline input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .checkbox-inline span {
-            color: #c62828;
-            font-weight: 600;
-        }
-
-        .pdf-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            background: #e8f5e3;
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid #c8e6c9;
-        }
-
-        .pdf-icon-text {
-            font-size: 3em;
-        }
-
-        img.pdf-icon-text {
-            width: 48px;
-            height: 48px;
-        }
-
-        .pdf-details {
-            flex-grow: 1;
-        }
-
-        .pdf-name {
-            font-weight: 700;
-            color: #2e7d32;
-            font-size: 1.1em;
-            margin-bottom: 8px;
-        }
-
-        .pdf-note {
-            color: #66bb6a;
-            font-size: 0.9em;
-            font-style: italic;
-        }
-
-        @media (max-width: 768px) {
-            .current-cover-image {
-                max-width: 100%;
-            }
-
-            .pdf-info {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
 </body>
 </html>

@@ -81,10 +81,12 @@ if (!$manuscript['is_public'] && $manuscript['user_id'] != $user_id) {
     die("This manuscript is private");
 }
 
+
 $pdf_path = $_SERVER['DOCUMENT_ROOT'] . $manuscript['filepath'];
 if (!file_exists($pdf_path)) {
     die("File not found.");
 }
+    include 'includes/comments-section.php';
 ?>
 
 <!DOCTYPE html>
@@ -93,96 +95,8 @@ if (!file_exists($pdf_path)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($manuscript['title']); ?> – Garden of Words</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Quicksand', sans-serif;
-            background: #f3faf3;
-        }
-
-        .reader-header {
-            padding: 20px 30px;
-            background: white;
-            border-bottom: 2px solid #c8e6c9;
-        }
-
-        .reader-header h1 {
-            margin: 0;
-            color: #2e7d32;
-            font-size: 1.8em;
-            line-height: 1.3;
-        }
-
-        .reader-header p {
-            margin-top: 5px;
-            color: #4e6e5d;
-            font-size: 1em;
-        }
-
-        .reader-actions {
-            margin-top: 10px;
-        }
-
-        .reader-actions a {
-            color: #2e7d32;
-            text-decoration: underline;
-            font-weight: 600;
-            margin-right: 15px;
-            font-size: 0.9em;
-        }
-
-        .pdf-container {
-            width: 100%;
-            height: calc(100vh - 120px);
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-            .reader-header {
-                padding: 15px 20px;
-            }
-
-            .reader-header h1 {
-                font-size: 1.5em;
-            }
-
-            .reader-actions {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            .reader-actions a {
-                font-size: 0.85em;
-                margin-right: 0;
-            }
-
-            .pdf-container {
-                height: calc(100vh - 100px);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .reader-header {
-                padding: 12px 15px;
-            }
-
-            .reader-header h1 {
-                font-size: 1.3em;
-            }
-
-            .reader-actions a {
-                display: block;
-                margin-bottom: 5px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="includes/generalstyles.css">
+    <link rel="stylesheet" href="includes/functional.css">
 </head>
 <body>
 

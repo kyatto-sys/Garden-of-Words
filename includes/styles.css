@@ -1,0 +1,261 @@
+body {
+    background: linear-gradient(135deg, #e8f5e3 0%, #c8e6c9 50%, #a5d6a7 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+/* Container */
+.auth-container, .verify-container {
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Auth Box */
+.auth-box, .verify-box {
+    background: rgba(255, 255, 255, 0.98);
+    padding: 50px 45px;
+    border-radius: 30px;
+    box-shadow: 0 25px 70px rgba(46, 125, 50, 0.2);
+    text-align: center;
+    border: 3px solid #81c784;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.auth-box:hover, .verify-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 80px rgba(46, 125, 50, 0.25);
+}
+
+.auth-box h1, .verify-box h1 {
+    color: #2e7d32;
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.auth-box .subtitle {
+    color: #66bb6a;
+    margin-bottom: 35px;
+    font-size: 1.15em;
+    font-weight: 500;
+}
+
+/* Input Groups */
+.input-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    color: #388e3c;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1em;
+    letter-spacing: 0.3px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #a5d6a7;
+    border-radius: 18px;
+    font-size: 1.05em;
+    font-family: 'Quicksand', sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #66bb6a;
+    box-shadow: 0 0 20px rgba(102, 187, 106, 0.4);
+    transform: translateY(-2px);
+}
+
+.input-group input::placeholder {
+    color: #a5d6a7;
+    font-weight: 400;
+}
+
+/* Switch Text */
+.switch-text {
+    margin-top: 30px;
+    color: #66bb6a;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.switch-text a {
+    color: #2e7d32;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+}
+
+.switch-text a:hover {
+    color: #1b5e20;
+    border-bottom-color: #1b5e20;
+}
+
+/* Verify specific styles */
+.verify-container {
+    max-width: 550px;
+}
+
+.verify-box {
+    padding: 60px 50px;
+}
+
+.icon {
+    font-size: 5em;
+    margin-bottom: 20px;
+    animation: bounce 1s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.verify-box h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.message {
+    color: #66bb6a;
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.success-message {
+    color: #2e7d32;
+}
+
+.error-message {
+    color: #c62828;
+}
+
+/* Terms group */
+.terms-group {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 10px;
+    text-align: left !important;
+    margin-top: 16px;
+}
+
+.input-group.terms-group input[type="checkbox"] {
+    margin: 4px 0 0 0 !important;
+    width: 16px;
+    height: 16px;
+    accent-color: #66bb6a;
+    flex-shrink: 0;
+}
+
+.terms-label {
+    line-height: 1.4;
+    font-size: 14px;
+    color: #2e7d32;
+    cursor: pointer;
+}
+
+.terms-label input {
+    accent-color: #66bb6a;
+    margin-top: 3px;
+}
+
+.terms-label a {
+    color: #2e7d32;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.terms-label a:hover {
+    color: #1b5e20;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .auth-box, .verify-box {
+        padding: 40px 30px;
+    }
+
+    .auth-box h1 {
+        font-size: 2.2em;
+    }
+
+    .auth-box .subtitle {
+        font-size: 1em;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+    }
+
+    .input-group input {
+        padding: 14px 18px;
+        font-size: 1em;
+    }
+
+    .verify-box {
+        padding: 50px 35px;
+    }
+
+    .verify-box h1 {
+        font-size: 2em;
+    }
+
+    .message {
+        font-size: 1.1em;
+    }
+
+    .icon {
+        font-size: 4em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 20px 0;
+    }
+
+    .auth-container, .verify-container {
+        padding: 15px;
+    }
+
+    .auth-box, .verify-box {
+        padding: 35px 25px;
+    }
+
+    .auth-box h1 {
+        font-size: 1.9em;
+    }
+
+    .verify-box {
+        padding: 40px 30px;
+    }
+
+    .verify-box h1 {
+        font-size: 1.8em;
+    }
+
+    .input-group {
+        margin-bottom: 18px;
+    }
+}
