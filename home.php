@@ -14,7 +14,6 @@ $username = $_SESSION['username'];
 // Get recent public manuscripts with user info and reaction counts
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'newest';
 
-// Determine ORDER BY clause based on sort
 switch ($sort) {
     case 'most_viewed':
         $order_by = "m.views DESC";

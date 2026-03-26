@@ -5,7 +5,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/garden-of-words/includes/db.php';
 $message = '';
 $success = false;
 
-// Check if token is provided
 if (isset($_GET['token']) && !empty($_GET['token'])) {
     $token = mysqli_real_escape_string($conn, $_GET['token']);
     

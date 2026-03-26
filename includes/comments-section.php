@@ -1,7 +1,19 @@
 <?php
-if (!isset($manuscript_id) || !isset($user_id)) {
-    die('Error: manuscript_id and user_id must be set');
+// Comments Section Component for Garden of Words
+// Include this on read.php or any manuscript detail page
+// Usage: include 'includes/comments-section.php';
+// Required variables: $manuscript_id, $user_id, $manuscript (array with user_id)
+
+if (!isset($manuscript_id) || !isset($user_id) || !isset($manuscript)) {
+    die('Error: manuscript_id, user_id, and manuscript data must be set');
 }
+
+// Get username from session if not already set
+if (!isset($username)) {
+    $username = $_SESSION['username'] ?? 'User';
+}
+
+$is_author = ($manuscript['user_id'] == $user_id);
 ?>
 
 <link rel="stylesheet" href="includes/comments.css">
@@ -17,6 +29,8 @@ if (!isset($manuscript_id) || !isset($user_id)) {
         </div>
     </div>
 
+    <!-- New Comment Form (only show if NOT the author) -->
+    <?php if (!$is_author): ?>
     <div class="new-comment-form">
         <div class="comment-form-header">
             <img src="assets/garden.png" alt="User" class="user-avatar">
@@ -40,7 +54,15 @@ if (!isset($manuscript_id) || !isset($user_id)) {
             </button>
         </div>
     </div>
+    <?php else: ?>
+    <!-- Author Notice -->
+    <div class="author-notice">
+        <img src="assets/garden.png" alt="Author" class="icon">
+        <p>You're viewing your own manuscript. You can read comments from your readers and reply to them, but you cannot post top-level comments.</p>
+    </div>
+    <?php endif; ?>
 
+    <!-- Comments List -->
     <div class="comments-list" id="commentsList">
         <div class="loading-comments">
             <div class="spinner"></div>
@@ -48,6 +70,7 @@ if (!isset($manuscript_id) || !isset($user_id)) {
         </div>
     </div>
 </div>
+
 
 <template id="commentTemplate">
     <div class="comment-item" data-comment-id="">
@@ -111,13 +134,14 @@ if (!isset($manuscript_id) || !isset($user_id)) {
             </div>
         </div>
         
+
         <div class="replies-container"></div>
     </div>
 </template>
 
 <script src="includes/comments.js"></script>
 <script>
-    // Initialize comments system
+
     const currentUserId = <?php echo $user_id; ?>;
     const currentUsername = '<?php echo addslashes($username); ?>';
     const manuscriptAuthorId = <?php echo $manuscript['user_id'] ?? 0; ?>;

@@ -84,10 +84,9 @@ if (!$manuscript['is_public'] && $manuscript['user_id'] != $user_id) {
 
 $pdf_path = $_SERVER['DOCUMENT_ROOT'] . $manuscript['filepath'];
 if (!file_exists($pdf_path)) {
-    die("File not found.");
-}
-    include 'includes/comments-section.php';
+    die("File not found.");}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -114,6 +113,7 @@ if (!file_exists($pdf_path)) {
     <iframe src="serve_pdf.php?id=<?php echo $manuscript_id; ?>"></iframe>
 </div>
 
+<?php include 'includes/comments-section.php'; ?>
 </body>
 </html>
 <?php

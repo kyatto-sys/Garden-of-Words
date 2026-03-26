@@ -1,5 +1,3 @@
-// Comments System JavaScript for Garden of Words
-
 let manuscriptId, currentUserId, currentUsername, manuscriptAuthorId;
 let comments = [];
 
@@ -13,18 +11,15 @@ function initCommentsSystem(mId, uId, uName, authorId) {
     loadComments();
 }
 
-// Setup Event Listeners
 function setupEventListeners() {
     const newCommentText = document.getElementById('newCommentText');
     const postCommentBtn = document.getElementById('postCommentBtn');
     const charCount = document.getElementById('charCount');
     
-    // Only set up listeners if elements exist (they won't for manuscript authors)
     if (!newCommentText || !postCommentBtn) {
         return;
     }
     
-    // Character counter
             newCommentText.addEventListener('input', function() {
             const length = this.value.length;
             charCount.textContent = length;
@@ -41,8 +36,6 @@ function setupEventListeners() {
     // Post comment button
     postCommentBtn.addEventListener('click', postComment);
 
-
-// Load Comments
 async function loadComments() {
     const commentsList = document.getElementById('commentsList');
     
@@ -63,7 +56,6 @@ async function loadComments() {
     }
 }
 
-// Render Comments
 function renderComments() {
     const commentsList = document.getElementById('commentsList');
     
@@ -77,7 +69,6 @@ function renderComments() {
         return;
     }
     
-    // Organize comments into parent-child structure
     const topLevelComments = comments.filter(c => !c.parent_comment_id);
     
     commentsList.innerHTML = '';
@@ -243,7 +234,6 @@ async function postComment() {
     }
 }
 
-// Post Reply
 async function postReply(parentCommentId, textarea) {
     const commentText = textarea.value.trim();
     
@@ -372,18 +362,15 @@ async function reactToComment(commentId, reaction) {
         const data = await response.json();
         
         if (data.success) {
-            // Update UI
             const commentDiv = document.querySelector(`[data-comment-id="${commentId}"]`);
             if (commentDiv) {
                 commentDiv.querySelector('.like-count').textContent = data.like_count;
                 commentDiv.querySelector('.dislike-count').textContent = data.dislike_count;
                 
-                // Update active states
                 commentDiv.querySelector('.like-btn').classList.toggle('active', data.user_reaction === 'like');
                 commentDiv.querySelector('.dislike-btn').classList.toggle('active', data.user_reaction === 'dislike');
             }
             
-            // Update in comments array
             const comment = comments.find(c => c.id == commentId);
             if (comment) {
                 comment.like_count = data.like_count;
@@ -430,11 +417,8 @@ function formatDate(dateString) {
 
 // Show Success Message
 function showSuccess(message) {
-    // You can implement a toast notification here
-    // For now, just console log
     console.log('Success:', message);
     
-    // Simple alert version (replace with better UI later)
     const toast = document.createElement('div');
     toast.style.cssText = `
         position: fixed;
@@ -484,8 +468,6 @@ function showError(message) {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
-
-// Add CSS animations for toast
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {

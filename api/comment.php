@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/garden-of-words/includes/db.php';
 
 header('Content-Type: application/json');
 
-// Check if user is logged in
+
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Not authenticated']);
     exit();
@@ -22,7 +22,7 @@ if ($action === 'get') {
         exit();
     }
     
-    // Get all comments with user info and reaction counts
+    
     $query = "
         SELECT 
             c.*,
@@ -74,7 +74,7 @@ if ($action === 'post') {
     $manuscript = mysqli_fetch_assoc($check);
     $author_id = $manuscript['user_id'];
     
-    // Prevent authors from commenting on their own manuscripts (top-level comments only)
+    // Prevent authors from commenting on their own manuscripts
     if ($user_id == $author_id && !$parent_comment_id) {
         echo json_encode(['success' => false, 'message' => 'You cannot comment on your own manuscript']);
         exit();
@@ -99,7 +99,6 @@ if ($action === 'post') {
             ");
         }
         
-        // If it's a reply, also notify the parent comment author
         if ($parent_comment_id) {
             $parent_query = mysqli_query($conn, "SELECT user_id FROM manuscript_comments WHERE id = $parent_comment_id");
             if ($parent_row = mysqli_fetch_assoc($parent_query)) {
@@ -152,7 +151,6 @@ if ($action === 'edit') {
         exit();
     }
     
-    // Verify ownership
     $check = mysqli_query($conn, "SELECT user_id FROM manuscript_comments WHERE id = $comment_id");
     if (mysqli_num_rows($check) === 0) {
         echo json_encode(['success' => false, 'message' => 'Comment not found']);
@@ -165,7 +163,7 @@ if ($action === 'edit') {
         exit();
     }
     
-    // Update comment
+    
     $comment_text_escaped = mysqli_real_escape_string($conn, $comment_text);
     $update = "UPDATE manuscript_comments 
                SET comment_text = '$comment_text_escaped', is_edited = TRUE 
@@ -188,7 +186,7 @@ if ($action === 'delete') {
         exit();
     }
     
-    // Verify ownership
+    
     $check = mysqli_query($conn, "SELECT user_id FROM manuscript_comments WHERE id = $comment_id");
     if (mysqli_num_rows($check) === 0) {
         echo json_encode(['success' => false, 'message' => 'Comment not found']);
@@ -201,7 +199,7 @@ if ($action === 'delete') {
         exit();
     }
     
-    // Delete comment (cascades to replies and reactions)
+    
     if (mysqli_query($conn, "DELETE FROM manuscript_comments WHERE id = $comment_id")) {
         echo json_encode(['success' => true, 'message' => 'Comment deleted']);
     } else {
@@ -220,7 +218,7 @@ if ($action === 'react') {
         exit();
     }
     
-    // Check if user already reacted
+    
     $check = mysqli_query($conn, "
         SELECT reaction FROM comment_reactions 
         WHERE comment_id = $comment_id AND user_id = $user_id
@@ -230,14 +228,12 @@ if ($action === 'react') {
         $existing = mysqli_fetch_assoc($check);
         
         if ($existing['reaction'] === $reaction) {
-            // Remove reaction if clicking same button
             mysqli_query($conn, "
                 DELETE FROM comment_reactions 
                 WHERE comment_id = $comment_id AND user_id = $user_id
             ");
             $new_reaction = null;
         } else {
-            // Change reaction
             mysqli_query($conn, "
                 UPDATE comment_reactions 
                 SET reaction = '$reaction' 

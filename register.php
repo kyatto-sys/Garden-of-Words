@@ -1,5 +1,4 @@
 <?php
-// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -7,7 +6,6 @@ session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/garden-of-words/includes/db.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/garden-of-words/includes/email_config.php';
 
-// If user is already logged in, redirect to dashboard
 if (isset($_SESSION['user_id'])) {
     header("Location: home.php");
     exit();
